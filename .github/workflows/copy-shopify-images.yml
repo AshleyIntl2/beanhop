@@ -1,0 +1,29 @@
+name: Copy blog images from Shopify
+# One-time job: downloads the blog images still hosted on Shopify into images/blog/
+# so the site keeps working after the Shopify store is closed.
+on:
+  workflow_dispatch:
+  push:
+    paths: ["_tools/image-manifest.tsv"]
+permissions:
+  contents: write
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download images
+        run: |
+          mkdir -p images/blog
+          while IFS=$'\t' read -r name url; do
+            [ -z "$name" ] && continue
+            [ -s "images/blog/$name" ] && continue
+            curl -fsSL --retry 3 -o "images/blog/$name" "$url" || echo "Could not download $url"
+          done < _tools/image-manifest.tsv
+      - name: Commit images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add images/blog
+          git diff --cached --quiet || git commit -m "Copy blog images from Shopify"
+          git push
