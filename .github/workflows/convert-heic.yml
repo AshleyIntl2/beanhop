@@ -1,0 +1,30 @@
+name: Convert HEIC photos to JPG
+# One-time job: most browsers can't show .heic files, so convert them and update the pages.
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/convert-heic.yml"]
+permissions:
+  contents: write
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Convert
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq libheif-examples
+          shopt -s nullglob
+          for f in images/blog/*.heic; do
+            j="${f%.heic}.jpg"
+            heif-convert -q 85 "$f" "$j" && git rm -q "$f"
+            n=$(basename "$f"); nj=$(basename "$j")
+            grep -rl --include='*.html' "$n" . | xargs -r sed -i "s/$n/$nj/g"
+          done
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Convert HEIC blog photos to JPG"
+          git push
