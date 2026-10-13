@@ -152,3 +152,19 @@ header.top { align-items: center; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mark { filter: brightness(1.7) saturate(.9); } }
 :root[data-theme="dark"] .mark { filter: brightness(1.7) saturate(.9); }
 .brand .bh-word { color: var(--ink); }
+
+/* Prompt library */
+.prompts { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.prompt { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); overflow: hidden; scroll-margin-top: 1rem; }
+.prompt-head { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; padding: .9rem 1rem .6rem; }
+.prompt-head .label { flex-basis: 100%; }
+.prompt-head h3 { flex: 1 1 14rem; min-width: 0; font-size: 1.15rem; }
+.prompt-text { margin: 0; padding: .9rem 1rem 1.1rem; border-top: 1px solid var(--line); background: var(--bg); font-family: var(--mono); font-size: .82rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+.toc { margin-top: 2rem; display: grid; gap: .5rem; }
+.toc ol { margin: 0; padding-left: 0; list-style: none; columns: 2 16rem; column-gap: 2rem; }
+.toc li { break-inside: avoid; padding: .2rem 0; font-family: var(--display); font-weight: 600; font-size: .98rem; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.prose .pull { font-family: var(--display); font-weight: 600; font-size: 1.2rem; line-height: 1.35; color: var(--ink); border-left: 3px solid var(--accent); padding-left: 1rem; }
+.prose ul.start { columns: 2 12rem; }
+nav a[aria-current="page"] { color: var(--accent); }
