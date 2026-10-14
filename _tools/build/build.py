@@ -246,6 +246,7 @@ def iv_footer():
 
 def iv_doc(title, desc, root, body, fragment=False):
     head = (f"<title>{esc(title)}</title><meta name=\"description\" content=\"{esc(desc)}\">{IV_FONTS}"
+            '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png">'
             f'<link rel="stylesheet" href="{root}style.css">')
     if fragment:
         return head + "\n" + body + IMG_GUARD + "\n"
