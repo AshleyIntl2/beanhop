@@ -139,6 +139,7 @@ def redirect_stub(h):
 
 def doc(title, desc, root, body, fragment=False):
     head = (f"<title>{esc(title)}</title><meta name=\"description\" content=\"{esc(desc)}\">{FONTS}"
+            '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">'
             f'<link rel="stylesheet" href="{root}style.css">')
     if fragment:
         return head + "\n" + body + IMG_GUARD + "\n"
